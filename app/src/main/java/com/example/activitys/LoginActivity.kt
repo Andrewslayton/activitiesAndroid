@@ -17,14 +17,11 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // Check if user is already logged in
         if (auth.currentUser != null) {
-            // User is logged in, proceed to main activity
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
-        // Setup listeners for login and sign up buttons
         findViewById<Button>(R.id.loginButton).setOnClickListener {
             val email = findViewById<EditText>(R.id.emailEditText).text.toString()
             val password = findViewById<EditText>(R.id.passwordEditText).text.toString()
