@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "142145742259",
+    "project_id": "activity-633dc",
+    "storage_bucket": "activity-633dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142145742259:android:d5fc84ac7eb11c731057c6",
+        "android_client_info": {
+          "package_name": "com.example.activitys"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJMz6ufFSQ9ILt1VfrwlKHtzA777-qi2Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
