@@ -18,7 +18,7 @@ class MainActivityViewModel(private val apiService: TicketmasterApiService) : Vi
     fun loadEvents(userPreferences: UserPreferences, apiKey: String) {
         viewModelScope.launch {
             val response = apiService.getEvents(apiKey, "${userPreferences.latitude},${userPreferences.longitude}",
-                10000.toString(), "miles", userPreferences.hobbies.joinToString(","))
+                userPreferences.searchRadius.toString(), "miles", userPreferences.hobbies.joinToString(","))
 
             if (response.isSuccessful && response.body() != null) {
                 _events.postValue(response.body()?.embedded?.events ?: emptyList())

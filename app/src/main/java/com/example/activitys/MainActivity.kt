@@ -3,6 +3,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.activitys.Repository.MainActivityViewModelFactory
 import com.example.activitys.model.UserPreferences
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val recyclerView: RecyclerView = findViewById(R.id.eventsRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         viewModel.events.observe(this) { events ->
             recyclerView.adapter = EventsAdapter(events) { event ->
                 saveEventToFirestore(event)
