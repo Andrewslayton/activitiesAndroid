@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 
+
 class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
@@ -82,6 +83,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
             if (location != null) {
                 currentLocation = location
                 val userLatLng = LatLng(location.latitude, location.longitude)
+                println(userLatLng)
                 mMap.addMarker(MarkerOptions().position(userLatLng).title("Your Location"))
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 12f))
             }
