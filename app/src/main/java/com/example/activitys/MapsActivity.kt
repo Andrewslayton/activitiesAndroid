@@ -1,34 +1,94 @@
 package com.example.activitys
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Bundle
+import android.widget.SeekBar
+import android.widget.TextView
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var distanceSeekBar: SeekBar
+    private lateinit var distanceTextView: TextView
+    private var currentLocation: Location? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(this)
+
+        setupSeekBar()
+        getCurrentLocation()
+    }
+
+    private fun setupSeekBar() {
+        distanceSeekBar = findViewById(R.id.distanceSeekBar)
+        distanceTextView = findViewById(R.id.distanceTextView)
+
+        distanceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                val distance = progress + 1 // Progress starts at 0, distance starts at 1 mile
+                distanceTextView.text = "Distance: $distance miles"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                if (currentLocation != null) {
+                    val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
+                    saveUserLocationAndDistance("userId", latLng, seekBar!!.progress + 1)
+                }
+            }
+        })
+    }
+
+    private fun getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 1)
+            return
+        }
+        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+            if (location != null) {
+                currentLocation = location
+                val userLatLng = LatLng(location.latitude, location.longitude)
+                mMap.addMarker(MarkerOptions().position(userLatLng).title("Your Location"))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 12f))
+            }
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.uiSettings.isZoomControlsEnabled = true
+        getCurrentLocation()
+    }
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    private fun saveUserLocationAndDistance(userId: String, latLng: LatLng, distance: Int) {
+        val db = FirebaseFirestore.getInstance()
+        val locationData = hashMapOf(
+            "latitude" to latLng.latitude,
+            "longitude" to latLng.longitude,
+            "distance" to distance
+        )
+        db.collection("users").document(userId).update(locationData as Map<String, Any>)
+            .addOnSuccessListener { /* Handle success */ }
+            .addOnFailureListener { e -> /* Handle error */ }
     }
 }
