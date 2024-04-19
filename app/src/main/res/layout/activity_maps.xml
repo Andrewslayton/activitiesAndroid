@@ -16,7 +16,7 @@
         android:id="@+id/distanceSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/nextButton"
         android:max="99" />
 
     <TextView
@@ -29,4 +29,14 @@
         android:background="#AA000000"
         android:textColor="#FFFFFF"
         android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Next"
+        android:background="@color/design_default_color_primary"
+        android:textColor="#FFFFFF"/>
+
 </RelativeLayout>

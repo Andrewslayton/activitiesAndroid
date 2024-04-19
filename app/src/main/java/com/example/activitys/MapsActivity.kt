@@ -1,9 +1,11 @@
 package com.example.activitys
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
@@ -36,6 +38,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
         setupSeekBar()
         getCurrentLocation()
+        setupNextButton()
     }
 
     private fun setupSeekBar() {
@@ -49,13 +52,20 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                if (currentLocation != null) {
-                    val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
-                    saveUserLocationAndDistance("userId", latLng, seekBar!!.progress + 1)
-                }
-            }
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
+    }
+
+    private fun setupNextButton() {
+        val nextButton: Button = findViewById(R.id.nextButton)
+        nextButton.setOnClickListener {
+            if (currentLocation != null) {
+                val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
+                val distance = distanceSeekBar.progress + 1
+                saveUserLocationAndDistance("userId", latLng, distance)
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+        }
     }
 
     private fun getCurrentLocation() {

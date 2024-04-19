@@ -1,4 +1,4 @@
-package viewmodel
+package com.example.activitys.viewmodel
 
 import HobbiesRepository
 import androidx.lifecycle.ViewModel

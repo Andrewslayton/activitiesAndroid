@@ -1,6 +1,6 @@
-package viewmodel
+package com.example.activitys.viewmodel
 
-import Repository.EventsRepository
+import com.example.activitys.Repository.EventsRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

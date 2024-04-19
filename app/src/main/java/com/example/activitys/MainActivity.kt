@@ -4,7 +4,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.activitys.model.UserPreferences
-import viewmodel.MainActivityViewModel
+import com.example.activitys.viewmodel.MainActivityViewModel
 
 class MainActivity : AppCompatActivity() {
 

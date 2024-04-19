@@ -5,7 +5,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import viewmodel.HobbiesViewModel
+import com.example.activitys.viewmodel.HobbiesViewModel
 
 class HobbiesActivity : AppCompatActivity() {
 

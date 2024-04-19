@@ -1,4 +1,4 @@
-package Repository
+package com.example.activitys.Repository
 
 import com.example.activitys.Event
 import com.example.activitys.TicketmasterApiService
