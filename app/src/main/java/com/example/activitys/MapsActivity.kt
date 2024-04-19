@@ -18,6 +18,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MapsActivity : FragmentActivity(), OnMapReadyCallback {
@@ -27,6 +28,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
     private lateinit var distanceSeekBar: SeekBar
     private lateinit var distanceTextView: TextView
     private var currentLocation: Location? = null
+    private var userId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
         setupSeekBar()
         getCurrentLocation()
         setupNextButton()
+        userId = FirebaseAuth.getInstance().currentUser?.uid
     }
 
     private fun setupSeekBar() {
@@ -59,10 +62,10 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
     private fun setupNextButton() {
         val nextButton: Button = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
-            if (currentLocation != null) {
+            if (currentLocation != null && userId != null) {
                 val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                 val distance = distanceSeekBar.progress + 1
-                saveUserLocationAndDistance("userId", latLng, distance)
+                saveUserLocationAndDistance(userId!!, latLng, distance)
                 startActivity(Intent(this, MainActivity::class.java))
             }
         }
