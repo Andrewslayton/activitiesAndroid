@@ -1,12 +1,12 @@
 package com.example.activitys
 
+import HobbiesViewModel
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.activitys.viewmodel.HobbiesViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 class HobbiesActivity : AppCompatActivity() {

@@ -104,7 +104,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
             "distance" to distance
         )
         db.collection("users").document(userId).set(locationData, SetOptions.merge())
-            .addOnSuccessListener { /* Handle success */ }
-            .addOnFailureListener { e -> /* Handle error */ }
+            .addOnSuccessListener {  }
+            .addOnFailureListener { e ->  }
     }
 }

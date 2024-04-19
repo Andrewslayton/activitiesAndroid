@@ -1,16 +1,24 @@
-package com.example.activitys.viewmodel
-
-import HobbiesRepository
+import android.content.Intent
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.viewModelScope
+import com.example.activitys.HobbiesActivity
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
-class HobbiesViewModel(private val repository: HobbiesRepository) : ViewModel() {
+class HobbiesViewModel : ViewModel() {
+
+    private val db = FirebaseFirestore.getInstance()
 
     fun saveUserHobbies(userId: String, hobbies: List<String>) {
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.saveHobbies(userId, hobbies)
+        viewModelScope.launch {
+            val userHobbies = hashMapOf("hobbies" to hobbies)
+            db.collection("users").document(userId).set(userHobbies)
+                .addOnSuccessListener {
+                }
+                .addOnFailureListener { e ->
+                    // Handle failure
+                }
         }
     }
 }
