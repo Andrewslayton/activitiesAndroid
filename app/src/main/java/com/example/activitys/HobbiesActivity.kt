@@ -17,20 +17,20 @@ class HobbiesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hobies)
 
-        val reading = findViewById<CheckBox>(R.id.checkbox_reading)
-        val gaming = findViewById<CheckBox>(R.id.checkbox_gaming)
-        val hiking = findViewById<CheckBox>(R.id.checkbox_hiking)
-        val cooking = findViewById<CheckBox>(R.id.checkbox_cooking)
+        val music = findViewById<CheckBox>(R.id.checkbox_music)
+        val  sports = findViewById<CheckBox>(R.id.checkbox_sports)
+        val comedy = findViewById<CheckBox>(R.id.checkbox_comedy)
+        val theater = findViewById<CheckBox>(R.id.checkbox_theater)
         val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         findViewById<Button>(R.id.button_save_hobbies).setOnClickListener {
             if (userId != null) {
 
             val selectedHobbies = listOf(
-                "Reading" to reading.isChecked,
-                "Gaming" to gaming.isChecked,
-                "Hiking" to hiking.isChecked,
-                "Cooking" to cooking.isChecked
+                "Music" to music.isChecked,
+                "Sports" to sports.isChecked,
+                "Comedy" to comedy.isChecked,
+                "Theater" to theater.isChecked
             ).filter { it.second }.map { it.first }
             viewModel.saveUserHobbies(userId, selectedHobbies)
             } else {

@@ -52,7 +52,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
         distanceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val distance = progress + 1 // Progress starts at 0, distance starts at 1 mile
+                val distance = progress + 1
                 distanceTextView.text = "Distance: $distance miles"
             }
 
@@ -103,7 +103,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
             "longitude" to latLng.longitude,
             "distance" to distance
         )
-        db.collection("users").document(userId).set(locationData, SetOptions.merge())
+        db.collection("users").document(userId).update(locationData as Map<String, Any>)
             .addOnSuccessListener {  }
             .addOnFailureListener { e ->  }
     }

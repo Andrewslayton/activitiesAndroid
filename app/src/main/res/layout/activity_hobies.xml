@@ -5,25 +5,25 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <CheckBox android:id="@+id/checkbox_reading"
+    <CheckBox android:id="@+id/checkbox_music"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Reading" />
+        android:text="Music" />
 
-    <CheckBox android:id="@+id/checkbox_gaming"
+    <CheckBox android:id="@+id/checkbox_sports"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gaming" />
+        android:text="Sports" />
 
-    <CheckBox android:id="@+id/checkbox_hiking"
+    <CheckBox android:id="@+id/checkbox_comedy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hiking" />
+        android:text="Comedy" />
 
-    <CheckBox android:id="@+id/checkbox_cooking"
+    <CheckBox android:id="@+id/checkbox_theater"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cooking" />
+        android:text="Theater" />
 
     <Button android:id="@+id/button_save_hobbies"
         android:layout_width="match_parent"

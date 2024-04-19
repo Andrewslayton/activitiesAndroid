@@ -18,7 +18,7 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         if (auth.currentUser != null) {
-            startActivity(Intent(this, HobbiesActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    startActivity(Intent(this, HobbiesActivity::class.java))
+                    startActivity(Intent(this, MapsActivity::class.java))
                     finish()
                 } else {
                     Toast.makeText(baseContext, "Authentication failed.",

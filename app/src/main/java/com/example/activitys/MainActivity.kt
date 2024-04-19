@@ -3,29 +3,46 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.activitys.Repository.MainActivityViewModelFactory
 import com.example.activitys.model.UserPreferences
 import com.example.activitys.viewmodel.MainActivityViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel: MainActivityViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels {
+        MainActivityViewModelFactory(RetrofitService.ticketmasterApi)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val recyclerView: RecyclerView = findViewById(R.id.eventsRecyclerView)
-
         viewModel.events.observe(this) { events ->
             recyclerView.adapter = EventsAdapter(events)
         }
 
-        // Assume getUserPreferences is a method that fetches user preferences
-        viewModel.loadEvents(getUserPreferences())
+        fetchUserPreferencesAndLoadEvents()
     }
 
-    private fun getUserPreferences(): UserPreferences {
-        // This should actually fetch data from Firestore or your preferred storage
-        return UserPreferences(34.0522, -118.2437, 100, listOf("Music", "Sports"))
+    private fun fetchUserPreferencesAndLoadEvents() {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+        db.collection("users").document(userId).get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val latitude = document.getDouble("latitude") ?: 0.0
+                val longitude = document.getDouble("longitude") ?: 0.0
+                val distance = document.getLong("distance")?.toInt() ?: 0
+                val hobbies = document.get("hobbies") as List<String>? ?: listOf()
+
+                val userPreferences = UserPreferences(latitude, longitude, distance, hobbies)
+                val apiKey = "VNHzOfnzhWz7553H1dhFDeHZaJNU4NZW"
+                viewModel.loadEvents(userPreferences, apiKey)
+            } else {
+            }
+        }.addOnFailureListener {
+        }
     }
 }
