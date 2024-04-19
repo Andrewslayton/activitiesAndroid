@@ -1,5 +1,6 @@
 package com.example.activitys
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -21,12 +22,23 @@ class MainActivity : AppCompatActivity() {
 
         val recyclerView: RecyclerView = findViewById(R.id.eventsRecyclerView)
         viewModel.events.observe(this) { events ->
-            recyclerView.adapter = EventsAdapter(events)
+            recyclerView.adapter = EventsAdapter(events) { event ->
+                saveEventToFirestore(event)
+            }
         }
-
         fetchUserPreferencesAndLoadEvents()
     }
-
+    private fun saveEventToFirestore(event: Event) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+        db.collection("users").document(userId).collection("selectedEvents").document(event.id).set(event)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Event saved", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "failure to save event try again or something.", Toast.LENGTH_SHORT).show()
+            }
+    }
     private fun fetchUserPreferencesAndLoadEvents() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val db = FirebaseFirestore.getInstance()
