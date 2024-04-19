@@ -5,7 +5,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.activitys.EventDetailsAdapter
 import com.example.activitys.viewmodel.FurtherDetailsViewModel
 import com.google.firebase.auth.FirebaseAuth
 
