@@ -45,10 +45,9 @@
             android:name=".MapsActivity"
             android:exported="true"/>
 
-        <!-- MainActivity (if used later as a different screen) -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"/>
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="true"/>-->
 
     </application>
 
