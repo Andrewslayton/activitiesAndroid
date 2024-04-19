@@ -19,6 +19,7 @@ class HobbiesActivity : AppCompatActivity() {
         val gaming = findViewById<CheckBox>(R.id.checkbox_gaming)
         val hiking = findViewById<CheckBox>(R.id.checkbox_hiking)
         val cooking = findViewById<CheckBox>(R.id.checkbox_cooking)
+        var userId: String? = null
 
         findViewById<Button>(R.id.button_save_hobbies).setOnClickListener {
             val selectedHobbies = listOf(

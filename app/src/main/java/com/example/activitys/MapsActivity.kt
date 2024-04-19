@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 
 class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
@@ -66,7 +67,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
                 val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                 val distance = distanceSeekBar.progress + 1
                 saveUserLocationAndDistance(userId!!, latLng, distance)
-                startActivity(Intent(this, MainActivity::class.java))
+//                startActivity(Intent(this, MainActivity::class.java))
             }
         }
     }
@@ -100,7 +101,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
             "longitude" to latLng.longitude,
             "distance" to distance
         )
-        db.collection("users").document(userId).update(locationData as Map<String, Any>)
+        db.collection("users").document(userId).set(locationData, SetOptions.merge())
             .addOnSuccessListener { /* Handle success */ }
             .addOnFailureListener { e -> /* Handle error */ }
     }
