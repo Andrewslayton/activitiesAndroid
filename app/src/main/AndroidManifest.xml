@@ -30,17 +30,14 @@
             </intent-filter>
         </activity>
 
-        <!-- SignupActivity -->
         <activity
             android:name=".SignupActivity"
             android:exported="true"/>
 
-        <!-- com.example.activitys.HobbiesActivity -->
         <activity
             android:name=".HobbiesActivity"
             android:exported="true"/>
 
-        <!-- MapsActivity -->
         <activity
             android:name=".MapsActivity"
             android:exported="true"/>

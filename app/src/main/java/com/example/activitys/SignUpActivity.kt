@@ -11,7 +11,6 @@ import com.google.firebase.auth.FirebaseAuth
 class SignupActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
@@ -38,7 +37,6 @@ class SignupActivity : AppCompatActivity() {
                     startActivity(Intent(this, HobbiesActivity::class.java))
                     finish()
                 } else {
-                    // If sign in fails, display a message to the user.
                     Toast.makeText(baseContext, "Signup failed: ${task.exception?.message}",
                         Toast.LENGTH_SHORT).show()
                 }

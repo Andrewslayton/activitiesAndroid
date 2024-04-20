@@ -100,7 +100,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
                 currentLocation = location
                 val userLatLng = LatLng(location.latitude, location.longitude)
                 mMap.addMarker(MarkerOptions().position(userLatLng).title("Your Location"))
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 12f))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 10f))
                 updateMapCircle((distanceSeekBar.progress + 1) * 1609.34)
             }
         }

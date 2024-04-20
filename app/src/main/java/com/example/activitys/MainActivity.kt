@@ -15,6 +15,8 @@ import com.example.activitys.viewmodel.MainActivityViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
+
+
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels {
@@ -28,8 +30,10 @@ class MainActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.eventsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         viewModel.events.observe(this) { events ->
-            recyclerView.adapter = EventsAdapter(events) { event ->
-                saveEventToFirestore(event)
+            recyclerView.adapter = EventsAdapter(events.toMutableList()) { event, position ->
+                saveEventToFirestore(event) {
+                    (recyclerView.adapter as EventsAdapter).removeAt(position)
+                }
             }
         }
         fetchUserPreferencesAndLoadEvents()
@@ -39,12 +43,13 @@ class MainActivity : AppCompatActivity() {
             showMenu(view)
         }
     }
-    private fun saveEventToFirestore(event: Event) {
+    private fun saveEventToFirestore(event: Event, callback: () -> Unit) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val db = FirebaseFirestore.getInstance()
         db.collection("users").document(userId).collection("selectedEvents").document(event.id).set(event)
             .addOnSuccessListener {
                 Toast.makeText(this, "Event saved", Toast.LENGTH_SHORT).show()
+                callback()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "failure to save event try again or something.", Toast.LENGTH_SHORT).show()

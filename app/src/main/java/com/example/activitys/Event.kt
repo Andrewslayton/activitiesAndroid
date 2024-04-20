@@ -19,7 +19,7 @@ data class Event(
     @SerializedName("url") val url: String = "",
     @SerializedName("info") val info: String? = null,
     @SerializedName("pleaseNote") val pleaseNote: String? = null,
-    @SerializedName("embedded") val embedded: Embedded? = null
+    @SerializedName("_embedded") val embedded: Embedded? = null
 )
 
 data class Embedded(
