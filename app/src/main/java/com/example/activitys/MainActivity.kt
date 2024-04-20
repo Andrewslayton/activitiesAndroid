@@ -1,5 +1,9 @@
 package com.example.activitys
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +33,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         fetchUserPreferencesAndLoadEvents()
+
+        val menuButton: Button = findViewById(R.id.menuButton)
+        menuButton.setOnClickListener { view ->
+            showMenu(view)
+        }
     }
     private fun saveEventToFirestore(event: Event) {
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
@@ -59,4 +68,28 @@ class MainActivity : AppCompatActivity() {
         }.addOnFailureListener {
         }
     }
+    private fun showMenu(v: View) {
+        PopupMenu(this, v).apply {
+            menuInflater.inflate(R.menu.main_menu, menu)
+            setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_redo_selections -> {
+                        startActivity(Intent(this@MainActivity, HobbiesActivity::class.java))
+                        true
+                    }
+                    R.id.action_settings -> {
+                        startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
+                        true
+                    }
+                    R.id.action_further_details -> {
+                        startActivity(Intent(this@MainActivity, FurtherDetailsActivity::class.java))
+                        true
+                    }
+                    else -> false
+                }
+            }
+            show()
+        }
+    }
+
 }
