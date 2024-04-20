@@ -19,15 +19,17 @@ data class Event(
     @SerializedName("url") val url: String = "",
     @SerializedName("info") val info: String? = null,
     @SerializedName("pleaseNote") val pleaseNote: String? = null,
-    @SerializedName("_embedded") val embedded: EmbeddedVenue? = null
+    @SerializedName("embedded") val embedded: Embedded? = null
 )
 
-data class EmbeddedVenue(
+data class Embedded(
     @SerializedName("venues") val venues: List<Venue>? = emptyList()
 )
 
 data class Venue(
-    @SerializedName("address") val address: Address
+    @SerializedName("address") val address: Address? = null,
+    @SerializedName("id") val id: String = "",
+    @SerializedName("name") val name: String = ""
 )
 
 data class Address(

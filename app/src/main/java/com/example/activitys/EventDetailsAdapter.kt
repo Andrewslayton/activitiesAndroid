@@ -19,7 +19,7 @@ class EventDetailsAdapter(
             itemView.findViewById<TextView>(R.id.eventPriceRangeTextView).text = event.priceRanges?.let {
                 if (it.isNotEmpty()) "Price: ${it[0].min} to ${it[0].max} ${it[0].currency}" else "No price info"
             } ?: "No price info"
-            itemView.findViewById<TextView>(R.id.addressTextView).text = event.embedded?.venues?.firstOrNull()?.address?.line2 ?: "no address currently"
+            itemView.findViewById<TextView>(R.id.addressTextView).text = event.embedded?.venues?.firstOrNull()?.address?.line1 ?: "No address ready yet"
             itemView.findViewById<Button>(R.id.deselectButton).setOnClickListener {
                 onDeselect(event, position)
             }
