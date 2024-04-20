@@ -27,27 +27,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            tools:text="March 10, 2024 at 5:00 PM"/>
+            tools:text="date test"/>
 
         <TextView
             android:id="@+id/eventDistanceTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            tools:text="Distance: 120 miles"/>
+            tools:text="Distance: test"/>
 
         <TextView
             android:id="@+id/eventPriceRangeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            tools:text="Price: $50 to $200"/>
+            tools:text="Price: test"/>
         <TextView
             android:id="@+id/addressTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            tools:text="123 Main St, City, State" />
+            tools:text="street test" />
 
         <Button
             android:id="@+id/deselectButton"

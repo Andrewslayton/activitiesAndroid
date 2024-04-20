@@ -12,6 +12,6 @@ interface TicketmasterApiService {
         @Query("latlong") latlong: String,
         @Query("radius") radius: String,
         @Query("unit") unit: String = "miles",
-        @Query("keyword") keyword: String? = null
-    ): Response<EventsResponse>  // Assuming EventsResponse wraps the list of Event objects
+        @Query("classificationName") keyword: String? = null
+    ): Response<EventsResponse>
 }

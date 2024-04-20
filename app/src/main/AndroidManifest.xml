@@ -51,6 +51,8 @@
 
         <activity android:name=".FurtherDetailsActivity"
             android:exported="true"/>
+        <activity android:name=".SettingsActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>
