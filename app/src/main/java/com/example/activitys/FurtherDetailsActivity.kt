@@ -19,10 +19,14 @@ class FurtherDetailsActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.eventsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = EventDetailsAdapter(emptyList()) { event -> // Lambda moved outside
+        adapter = EventDetailsAdapter(mutableListOf()) { event, position ->
             val userId = FirebaseAuth.getInstance().currentUser?.uid
-            userId?.let { viewModel.deselectEvent(it, event) }
+            userId?.let {
+                viewModel.deselectEvent(it, event)
+                adapter.removeEventAt(position)
+            }
         }
+
         recyclerView.adapter = adapter
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
@@ -35,3 +39,4 @@ class FurtherDetailsActivity : AppCompatActivity() {
         }
     }
 }
+
