@@ -42,6 +42,20 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             tools:text="Price: $50 to $200"/>
+        <TextView
+            android:id="@+id/addressTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            tools:text="123 Main St, City, State" />
+
+        <Button
+            android:id="@+id/deselectButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deselect"
+            android:backgroundTint="#D32F2F"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

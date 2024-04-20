@@ -18,7 +18,8 @@ data class Event(
     @SerializedName("priceRanges") val priceRanges: List<PriceRange>? = emptyList(),
     @SerializedName("url") val url: String = "",
     @SerializedName("info") val info: String? = null,
-    @SerializedName("pleaseNote") val pleaseNote: String? = null
+    @SerializedName("pleaseNote") val pleaseNote: String? = null,
+    @SerializedName("address") val address: String = ""
 )
 
 
@@ -45,10 +46,3 @@ data class PriceRange(
 //)
 
 
-
-//Maybe will use later for further details
-//data class EventImage(
-//    @SerializedName("url") val url: String,
-//    @SerializedName("width") val width: Int,
-//    @SerializedName("height") val height: Int
-//)

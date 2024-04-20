@@ -23,4 +23,10 @@ class FurtherDetailsViewModel : ViewModel() {
             .addOnFailureListener { exception ->
             }
     }
+    fun deselectEvent(userId: String, event: Event) {
+        db.collection("users").document(userId).collection("selectedEvents").document(event.id)
+            .delete()
+            .addOnSuccessListener {
+            }
+    }
 }
