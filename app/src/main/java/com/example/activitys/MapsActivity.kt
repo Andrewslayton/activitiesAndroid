@@ -55,7 +55,6 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
                 val distance = progress + 1
                 distanceTextView.text = "Distance: $distance miles"
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
@@ -68,7 +67,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
                 val latLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
                 val distance = distanceSeekBar.progress + 1
                 saveUserLocationAndDistance(userId!!, latLng, distance)
-//                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, MainActivity::class.java))
             }
         }
     }

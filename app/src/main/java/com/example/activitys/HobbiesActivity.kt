@@ -1,12 +1,14 @@
 package com.example.activitys
 
 import HobbiesViewModel
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
 
 class HobbiesActivity : AppCompatActivity() {
@@ -35,6 +37,18 @@ class HobbiesActivity : AppCompatActivity() {
             viewModel.saveUserHobbies(userId, selectedHobbies)
             } else {
                 Toast.makeText(this, "dont know how you did this but restart and login", Toast.LENGTH_SHORT).show()
+            }
+        }
+        viewModel.saveSuccessful.observe(this) { success ->
+            if (success) {
+                startActivity(Intent(this, MapsActivity::class.java))
+                finish()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Reselect.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
