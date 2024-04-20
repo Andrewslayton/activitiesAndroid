@@ -16,11 +16,12 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.Circle
+import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 
 
 class MapsActivity : FragmentActivity(), OnMapReadyCallback {
@@ -31,6 +32,7 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
     private lateinit var distanceTextView: TextView
     private var currentLocation: Location? = null
     private var userId: String? = null
+    private var currentCircle: Circle? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,14 +54,30 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
 
         distanceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                val distance = progress + 1
-                distanceTextView.text = "Distance: $distance miles"
+                val distance = (progress + 1) * 1609.34
+                distanceTextView.text = "Distance: ${progress + 1} miles"
+                updateMapCircle(distance)
             }
+
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
         })
     }
 
+    private fun updateMapCircle(radius: Double) {
+        if (currentLocation != null) {
+            val userLatLng = LatLng(currentLocation!!.latitude, currentLocation!!.longitude)
+            currentCircle?.remove()
+            currentCircle = mMap.addCircle(
+                CircleOptions()
+                    .center(userLatLng)
+                    .radius(radius)
+                    .strokeWidth(0.5f)
+                    .fillColor(0x30ff0000)
+                    .strokeColor(0x60ff0000)
+            )
+        }
+    }
     private fun setupNextButton() {
         val nextButton: Button = findViewById(R.id.nextButton)
         nextButton.setOnClickListener {
@@ -71,7 +89,6 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
             }
         }
     }
-
     private fun getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -82,9 +99,9 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
             if (location != null) {
                 currentLocation = location
                 val userLatLng = LatLng(location.latitude, location.longitude)
-                println(userLatLng)
                 mMap.addMarker(MarkerOptions().position(userLatLng).title("Your Location"))
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 12f))
+                updateMapCircle((distanceSeekBar.progress + 1) * 1609.34)
             }
         }
     }
@@ -103,7 +120,8 @@ class MapsActivity : FragmentActivity(), OnMapReadyCallback {
             "distance" to distance
         )
         db.collection("users").document(userId).update(locationData as Map<String, Any>)
-            .addOnSuccessListener {  }
-            .addOnFailureListener { e ->  }
+            .addOnSuccessListener { }
+            .addOnFailureListener { e -> }
     }
 }
+
