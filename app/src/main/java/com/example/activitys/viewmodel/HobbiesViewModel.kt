@@ -17,7 +17,6 @@ class HobbiesViewModel : ViewModel() {
                 .addOnSuccessListener {
                 }
                 .addOnFailureListener { e ->
-                    // Handle failure
                 }
         }
     }

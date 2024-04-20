@@ -19,7 +19,10 @@ class FurtherDetailsActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.eventsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = EventDetailsAdapter(emptyList())
+        adapter = EventDetailsAdapter(emptyList()) { event -> // Lambda moved outside
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
+            userId?.let { viewModel.deselectEvent(it, event) }
+        }
         recyclerView.adapter = adapter
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid
