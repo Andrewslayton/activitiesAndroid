@@ -21,7 +21,6 @@ class FurtherDetailsViewModel : ViewModel() {
                 _events.value = eventsList
             }
             .addOnFailureListener { exception ->
-                // Handle any errors here, perhaps logging them or displaying a message
             }
     }
 }
