@@ -36,7 +36,7 @@ class HobbiesActivity : AppCompatActivity() {
             ).filter { it.second }.map { it.first }
             viewModel.saveUserHobbies(userId, selectedHobbies)
             } else {
-                Toast.makeText(this, "dont know how you did this but restart and login", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "restart and login", Toast.LENGTH_SHORT).show()
             }
         }
         viewModel.saveSuccessful.observe(this) { success ->
